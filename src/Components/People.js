@@ -6,13 +6,16 @@ class People extends Component {
   	let personList;
   	if(this.props.people){
   		personList = this.props.people.map(person => {
-  			console.log(person);
+  			//console.log(person);
+  			return(
+  				<Person key={person.name} person={person} />
+  			);
   		});
   	}
     return (
       <div className="People">
-        People:
-        <Person />
+        <h3>People:</h3>
+        {personList}
       </div>
     );
   }
