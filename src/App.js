@@ -10,13 +10,37 @@ class App extends Component {
     }
   }
 
+  componentWillMount() {
+    this.setState({people: [
+      {
+        name: 'Jane Doe'
+      },
+      {
+        name: 'Joe Person'
+      },
+      {
+        name: 'Sally Seashells'
+      },
+      {
+        name: 'John Smith'
+      },
+      {
+        name: 'Suzy Smith'
+      },
+      {
+        name: 'Sam Person'
+      }
+    ]})
+  }
+
 // Do AJAX call here (lifecycle method) componentWillMount()
 
   render() {
     return (
       <div className="App">
+        <h1>The Name Game!</h1>
         My App
-        <Game />
+        <Game people={this.state.people}/>
       </div>
     );
   }
