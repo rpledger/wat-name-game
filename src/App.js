@@ -13,22 +13,28 @@ class App extends Component {
   componentWillMount() {
     this.setState({people: [
       {
-        name: 'Jane Doe'
+        firstName: 'Jane',
+        lastName: 'Doe'
       },
       {
-        name: 'Joe Person'
+        firstName: 'Joe Person',
+        lastName: 'Person'
       },
       {
-        name: 'Sally Seashells'
+        firstName: 'Sally',
+        lastName: 'Seashells'
       },
       {
-        name: 'John Smith'
+        firstName: 'John',
+        lastName: 'Smith'
       },
       {
-        name: 'Suzy Smith'
+        firstName: 'Suzy',
+        lastName: 'Smith'
       },
       {
-        name: 'Sam Person'
+        firstName: 'Sam',
+        lastName: 'Person'
       }
     ]})
   }

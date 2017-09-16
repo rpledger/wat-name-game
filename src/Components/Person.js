@@ -4,7 +4,7 @@ class Person extends Component {
   render() {
     return (
       <div className="Person">
-        {this.props.person.name}
+        {this.props.name}
       </div>
     );
   }
