@@ -40,12 +40,11 @@ class App extends Component {
 		]})
 	}
 
-	practice() {
-		console.log("Practicing");
-	}	
-
-	start(){
-		
+	practice(){
+		console.log("Practicing!");
+	}
+	timedStart(){
+		console.log("Starting for real");
 	}
 
 	render() {
@@ -53,7 +52,7 @@ class App extends Component {
 			<div className="App">
 				<h1>The Name Game!</h1>
 				<button onClick={this.practice} type="button" className="btn btn-outline-success">Practice First?</button>
-				<button onClick={this.start} type="button" className="btn btn-outline-success">Start</button>
+				<button onClick={this.timedStart} type="button" className="btn btn-outline-success">Start</button>
 				<Game people={this.state.people}/>
 			</div>
 		);
