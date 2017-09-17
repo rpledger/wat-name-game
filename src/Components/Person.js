@@ -5,7 +5,7 @@ class Person extends Component {
 		return (
 			<div className="Person">
 				{this.props.name}
-				<img src={this.props.imgurl} />
+				<img alt={this.props.name} src={this.props.imgurl} />
 			</div>
 		);
 	}
