@@ -15,6 +15,9 @@ class App extends Component {
 		axios.get('https://willowtreeapps.com/api/v1.0/profiles/').then(response => {
 			console.log(response);
 			this.setState({people: response.data})
+		})
+		.catch(function (error) {
+			console.log(error);
 		});
 	}
 
