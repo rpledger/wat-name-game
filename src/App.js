@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Game from './Components/Game'
 import './App.css';
-var axios = require('axios');
+import axios from 'axios'
 
 class App extends Component {
 	constructor() {
@@ -13,7 +13,10 @@ class App extends Component {
 
 	// Do AJAX call here (lifecycle method) componentWillMount()
 	componentDidMount() {
-		axios.get('https://willowtreeapps.com/api/v1.0/profiles/').then( response => console.log(response));
+		axios.get('https://willowtreeapps.com/api/v1.0/profiles/').then(response => {
+			console.log(response);
+			this.setState({people: response.data})
+		});
 		// this.setState({people: [
 		// 	{
 		// 		firstName: 'Jane',
