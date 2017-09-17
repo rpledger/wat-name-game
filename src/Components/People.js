@@ -15,7 +15,9 @@ class People extends Component {
 		return (
 			<div className="People">
 				<h3>People:</h3>
+				<div className="row">
 				{personList}
+				</div>
 			</div>
 		);
 	}
