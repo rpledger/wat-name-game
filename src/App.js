@@ -11,38 +11,11 @@ class App extends Component {
 		};
 	}
 
-	// Do AJAX call here (lifecycle method) componentWillMount()
 	componentDidMount() {
 		axios.get('https://willowtreeapps.com/api/v1.0/profiles/').then(response => {
 			console.log(response);
 			this.setState({people: response.data})
 		});
-		// this.setState({people: [
-		// 	{
-		// 		firstName: 'Jane',
-		// 		lastName: 'Doe'
-		// 	},
-		// 	{
-		// 		firstName: 'Joe Person',
-		// 		lastName: 'Person'
-		// 	},
-		// 	{
-		// 		firstName: 'Sally',
-		// 		lastName: 'Seashells'
-		// 	},
-		// 	{
-		// 		firstName: 'John',
-		// 		lastName: 'Smith'
-		// 	},
-		// 	{
-		// 		firstName: 'Suzy',
-		// 		lastName: 'Smith'
-		// 	},
-		// 	{
-		// 		firstName: 'Sam',
-		// 		lastName: 'Person'
-		// 	}
-		// ]})
 	}
 
 	practice() {
