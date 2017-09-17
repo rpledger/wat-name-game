@@ -8,7 +8,7 @@ class People extends Component {
 			personList = this.props.people.map(person => {
 				//console.log(person);
 				return(
-					<Person key={person.firstName} name={person.firstName + ' ' + person.lastName} />
+					<Person key={person.id} name={person.firstName + ' ' + person.lastName} />
 				);
 			});
 		}
