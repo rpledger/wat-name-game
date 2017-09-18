@@ -6,7 +6,7 @@ class People extends Component {
 		let personList;
 		if(this.props.people){
 			personList = this.props.people.map(person => {
-				//console.log(person);
+				console.log(person);
 				return(
 					<Person key={person.id} imgurl={person.headshot.url} name={person.firstName + ' ' + person.lastName} />
 				);

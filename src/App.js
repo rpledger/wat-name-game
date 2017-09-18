@@ -15,11 +15,12 @@ class App extends Component {
 
 	componentDidMount() {
 		axios.get('https://willowtreeapps.com/api/v1.0/profiles/').then(response => {
-			console.log(response);
+			let people = response.data;
+			let choices = randomChoices(people, 5);
 			this.setState({
-				people: response.data,
-				choices: randomChoices(response.data, 5),
-				selected: pickFirst(response.data)
+				people: people,
+				choices: choices,
+				selected: pickFirst(choices)
 			});
 		})
 		.catch(function (error) {
@@ -48,8 +49,16 @@ class App extends Component {
 }
 
 function randomChoices(list, num){
-	let choices = list.slice(0,5);
-	return choices
+	let choices = [];
+	while(choices.length < num){
+		let rand = list[Math.floor(Math.random() * list.length)];
+	 	while(choices.indexOf(rand) !== -1 ){
+	 		rand = list[Math.floor(Math.random() * list.length)];
+	 	}
+	 	choices.push(rand);
+	 }
+	 console.log(choices);
+	 return choices
 }
 
 function pickFirst(list){
