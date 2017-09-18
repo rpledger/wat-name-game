@@ -20,7 +20,7 @@ class App extends Component {
 			this.setState({
 				people: people,
 				choices: choices,
-				selected: pickFirst(choices)
+				selected: randomChoices(choices, 1)
 			});
 		})
 		.catch(function (error) {
@@ -58,6 +58,9 @@ function randomChoices(list, num){
 	 	choices.push(rand);
 	 }
 	 console.log(choices);
+	 if (num == 1){
+	 	return choices[0]
+	 }
 	 return choices
 }
 

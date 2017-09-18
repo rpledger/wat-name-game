@@ -7,7 +7,7 @@ class Game extends Component {
 		return (
 			<div className="Game">
 				Game: {this.props.name}
-				<People people={this.props.choices} />
+				<People choices={this.props.choices} selected={this.props.selected} />
 			</div>
 		);
 	}

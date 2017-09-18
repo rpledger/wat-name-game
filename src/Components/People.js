@@ -4,8 +4,9 @@ import Person from './Person'
 class People extends Component {
 	render() {
 		let personList;
-		if(this.props.people){
-			personList = this.props.people.map(person => {
+		let selectedName = this.props.selected.firstName + ' ' + this.props.selected.lastName
+		if(this.props.choices){
+			personList = this.props.choices.map(person => {
 				console.log(person);
 				return(
 					<Person key={person.id} imgurl={person.headshot.url} name={person.firstName + ' ' + person.lastName} />
@@ -14,7 +15,7 @@ class People extends Component {
 		}
 		return (
 			<div className="People">
-				<h3>People:</h3>
+				<h3>Who is {selectedName}?</h3>
 				<div className="row">
 				{personList}
 				</div>
