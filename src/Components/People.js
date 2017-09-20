@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import Person from './Person'
 
 class People extends Component {
+	onGuess(id){
+		this.props.onGuess(id);
+	}
+
 	render() {
 		let personList;
 		let selectedName = this.props.selected.firstName + ' ' + this.props.selected.lastName
@@ -9,7 +13,7 @@ class People extends Component {
 			personList = this.props.choices.map(person => {
 				console.log(person);
 				return(
-					<Person key={person.id} imgurl={person.headshot.url} name={person.firstName + ' ' + person.lastName} />
+					<Person onGuess={this.onGuess.bind(this)} key={person.id} person={person} />
 				);
 			});
 		}

@@ -6,8 +6,8 @@
 	margin-right: 15px;
 }
 
-.row{
-	margin: 20px;
+.People {
+	margin-top: 100px;
 }
 
 .Person {
@@ -15,5 +15,10 @@
 	min-height: 1px;
 	padding-right: 10px;
 	width: 20%;
-	float: left
+	float: left;
+}
+
+.row{
+	margin: 20px;
+	margin-top: 50px;
 }

@@ -2,12 +2,17 @@ import React, { Component } from 'react';
 import People from './People';
 
 class Game extends Component {
+	onGuess(id){
+		this.props.onGuess(id);
+	}
+
 	render() {
 		console.log(this.props.selected);
 		return (
 			<div className="Game">
-				Game: {this.props.name}
-				<People choices={this.props.choices} selected={this.props.selected} />
+				<div>Score: {this.props.score} </div>
+				<div>High Score: {this.props.highscore} </div>
+				<People onGuess={this.onGuess.bind(this)} choices={this.props.choices} selected={this.props.selected} />
 			</div>
 		);
 	}
