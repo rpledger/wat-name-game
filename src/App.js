@@ -14,6 +14,7 @@ class App extends Component {
 			score: 0,
 			practice: false,
 			play: false, 
+			secondsleft: 0
 		};
 	}
 
@@ -41,11 +42,22 @@ class App extends Component {
 		});
 	}
 
+	tick(){
+		this.setState({
+			secondsleft: this.state.secondsleft - 1
+		});
+		if (this.state.secondsleft <= 0){
+			clearInterval(this.interval);
+		}
+	}
+
 	timedStart() {
 		console.log("Playing Game");
 		this.setState({
-			play: true
+			play: true,
+			secondsleft: 15,
 		});
+		this.interval = setInterval(this.tick.bind(this), 1000);
 	}
 
 	handleGuess(id){
@@ -78,7 +90,7 @@ class App extends Component {
 	render() {
 		let game= null;
 		if(this.state.practice || this.state.play){
-			game = <Game onGuess={this.handleGuess.bind(this)} score={this.state.score} highscore={this.state.highscore} people={this.state.people} choices={this.state.choices} selected={this.state.selected}/>
+			game = <Game onGuess={this.handleGuess.bind(this)} secondsleft={this.state.secondsleft} score={this.state.score} highscore={this.state.highscore} people={this.state.people} choices={this.state.choices} selected={this.state.selected}/>
 		}
 
 		return (

@@ -10,7 +10,7 @@ class Game extends Component {
 	render() {
 		return (
 			<div className="Game">
-				<ScoreBoard score={this.props.score} highscore={this.props.highscore}/>
+				<ScoreBoard secondsleft={this.props.secondsleft} score={this.props.score} highscore={this.props.highscore}/>
 				<People onGuess={this.onGuess.bind(this)} choices={this.props.choices} selected={this.props.selected} />
 			</div>
 		);
