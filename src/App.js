@@ -11,7 +11,9 @@ class App extends Component {
 			choices: [],
 			selected: {},
 			highscore: 0,
-			score: 0
+			score: 0,
+			practice: false,
+			play: false, 
 		};
 	}
 
@@ -34,10 +36,16 @@ class App extends Component {
 
 	practice() {
 		console.log("Practice");
+		this.setState({
+			practice: true
+		});
 	}
 
 	timedStart() {
 		console.log("Playing Game");
+		this.setState({
+			play: true
+		});
 	}
 
 	handleGuess(id){
@@ -58,16 +66,27 @@ class App extends Component {
 				score: 0
 			});
 		}
-		console.log(this.state);
+		// Re-load People
+		let choices = randomChoices(this.state.people, 5);
+		console.log(choices);
+		this.setState({
+			choices: choices,
+			selected: randomChoices(choices, 1)
+		});
 	}
 
 	render() {
+		let game= null;
+		if(this.state.practice || this.state.play){
+			game = <Game onGuess={this.handleGuess.bind(this)} score={this.state.score} highscore={this.state.highscore} people={this.state.people} choices={this.state.choices} selected={this.state.selected}/>
+		}
+
 		return (
 			<div className="App">
 				<h1>The Name Game</h1>
 				<button onClick={this.practice.bind(this)} type="button" className="btn btn-primary">Practice</button>
 				<button onClick={this.timedStart.bind(this)} type="button" className="btn btn-primary">Start</button>
-				<Game onGuess={this.handleGuess.bind(this)} score={this.state.score} highscore={this.state.highscore} people={this.state.people} choices={this.state.choices} selected={this.state.selected}/>
+				{game}
 			</div>
 		);
 	}

@@ -11,7 +11,6 @@ class People extends Component {
 		let selectedName = this.props.selected.firstName + ' ' + this.props.selected.lastName
 		if(this.props.choices){
 			personList = this.props.choices.map(person => {
-				console.log(person);
 				return(
 					<Person onGuess={this.onGuess.bind(this)} key={person.id} person={person} />
 				);

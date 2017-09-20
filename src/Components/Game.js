@@ -7,7 +7,6 @@ class Game extends Component {
 	}
 
 	render() {
-		console.log(this.props.selected);
 		return (
 			<div className="Game">
 				<div>Score: {this.props.score} </div>
