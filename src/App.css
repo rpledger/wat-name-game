@@ -2,8 +2,35 @@
 	text-align: center;
 }
 
+h1{
+	margin-top: 20px;
+}
+
+h1:after{
+	display: inline-block;
+	margin: 0 0 8px 20px;
+	height: 3px;
+	content: " ";
+	text-shadow: none;
+	background-color: #999;
+	width: 140px;
+}
+
+h1:before{
+	display: inline-block;
+	margin: 0 20px 8px 0;
+	height: 3px;
+	content: " ";
+	text-shadow: none;
+	background-color: #999;
+	width: 140px;
+}
 .btn {
 	margin-right: 15px;
+}
+
+.ScoreBoard{
+	margin-top: 15px;
 }
 
 .People {
@@ -16,6 +43,12 @@
 	padding-right: 10px;
 	width: 20%;
 	float: left;
+
+    -webkit-transition: opacity 3s ease-in;
+       -moz-transition: opacity 3s ease-in;
+        -ms-transition: opacity 3s ease-in;
+         -o-transition: opacity 3s ease-in;
+            transition: opacity 3s ease-in;
 }
 
 .row{

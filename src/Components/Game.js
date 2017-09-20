@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import People from './People';
+import ScoreBoard from './Scoreboard'
 
 class Game extends Component {
 	onGuess(id){
@@ -9,8 +10,7 @@ class Game extends Component {
 	render() {
 		return (
 			<div className="Game">
-				<div>Score: {this.props.score} </div>
-				<div>High Score: {this.props.highscore} </div>
+				<ScoreBoard score={this.props.score} highscore={this.props.highscore}/>
 				<People onGuess={this.onGuess.bind(this)} choices={this.props.choices} selected={this.props.selected} />
 			</div>
 		);

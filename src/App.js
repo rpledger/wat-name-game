@@ -84,8 +84,8 @@ class App extends Component {
 		return (
 			<div className="App">
 				<h1>The Name Game</h1>
-				<button onClick={this.practice.bind(this)} type="button" className="btn btn-primary">Practice</button>
-				<button onClick={this.timedStart.bind(this)} type="button" className="btn btn-primary">Start</button>
+				<button onClick={this.practice.bind(this)} type="button" className="btn btn-outline-primary">Practice</button>
+				<button onClick={this.timedStart.bind(this)} type="button" className="btn btn-outline-primary">Start</button>
 				{game}
 			</div>
 		);
