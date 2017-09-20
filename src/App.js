@@ -47,7 +47,8 @@ class App extends Component {
 			secondsleft: this.state.secondsleft - 1
 		});
 		if (this.state.secondsleft <= 0){
-			clearInterval(this.interval);
+			//clearInterval(this.interval);
+			this.handleGuess(null);
 		}
 	}
 
@@ -82,6 +83,7 @@ class App extends Component {
 		let choices = randomChoices(this.state.people, 5);
 		console.log(choices);
 		this.setState({
+			secondsleft: 15,
 			choices: choices,
 			selected: randomChoices(choices, 1)
 		});
