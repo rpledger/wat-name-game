@@ -102,6 +102,7 @@ class App extends Component {
 		if (this.state.practice === true){
 			timer = 0;
 		}
+
 		this.setState({
 			correct: false,
 			secondsleft: timer,
