@@ -26,19 +26,12 @@ class App extends Component {
 		// Load WT People Data
 		axios.get('https://willowtreeapps.com/api/v1.0/profiles/').then(response => {
 			let people = response.data;
+			// Prepare Matt Filter
 			let mattPeople = mattFilter(people);
-			// let choices = [];
-			// if (this.state.mode === "normal"){
-			// 	choices = randomChoices(people, 5);
-			// }else{
-			// 	choices = randomChoices(mattPeople, 5);
-			// }
 			
 			this.setState({
 				people: people,
 				mattPeople: mattPeople,
-				//choices: choices,
-				//selected: randomChoices(choices, 1),
 				score: 0,
 				highscore: 0
 			});
@@ -48,45 +41,60 @@ class App extends Component {
 		});
 	}
 
+//**********************************************
+//************* TIMER TICK *********************
+//**********************************************
+
 	// Tick -1 second for countdown timer
 	tick(){
 		this.setState({
 			secondsleft: this.state.secondsleft - 1
 		});
 		if (this.state.secondsleft <= 0){
+			//Call handleGuess w/ null person to reload new People w/o scoring
 			this.handleGuess(null);
 		}
 	}
 
+//**********************************************
+//************* PLAY MODES *********************
+//**********************************************
+
+	// Practice mode loads new choices and doesn't use timer
 	practice() {
 		console.log("Practice");
 		let choices = randomChoices(this.state.people, 5);
 
-		if (this.state.play === true){
-			this.setState({
-				highscore: Math.max(this.state.score, this.state.highscore),
-				score: 0
-			});
-		}
 		this.setState({
 			practice: true,
 			play: false,
 			choices: choices,
 			selected: randomChoices(choices, 1),
 		});
+		// No timer
 		clearInterval(this.interval);
 	}
 
+	// Back button sends us back to main menu
+	back() {
+		this.setState({
+			practice: false,
+			play: false,
+		});
+	}
 
+	// Timed Challenge has two modes: normal & matt
 	timedStart(mode) {
-		console.log(mode);
+		// Reset Timer
 		clearInterval(this.interval);
+		// Choose from all people or only matts depending on mode
 		let choices = [];
 			if (mode === "normal"){
 				choices = randomChoices(this.state.people, 5);
 			}else{
 				choices = randomChoices(this.state.mattPeople, 5);
 			}
+		// Start timer
 		this.interval = setInterval(this.tick.bind(this), 1000);
 		this.setState({
 			mode: mode,
@@ -100,43 +108,56 @@ class App extends Component {
 
 	}
 
+//**********************************************
+//************* GUESS LOGIC ********************
+//**********************************************
+
+	// On Person click, this functino gets called to handle scoring and loading new choices
 	handleGuess(id){
-		console.log("Clicked!");
+		//Handle scoring
 		if (this.state.play === true){
+			// Update score if selected correclty
 			if(id === this.state.selected.id){
-				console.log("Selected Correctly!")
 				this.setState({
 					score: this.state.score + 1
 
 				});
 			}else{
+				// Only update high score when we get one wrong
 				if (this.state.score > this.state.highscore){
 					this.setState({
 						highscore: this.state.score,
 					});
 				}
+				// Delay going back to main menu to see animated result
 				setTimeout(() =>{
 					this.setState({
 						score: 0,
+						timer: 0,
 						play: false,
 					});
 				}, 1000);
+				// Stop timer
+				clearInterval(this.interval);
 			}
 		}
 
 		// Re-load People
 		let choices = [];
 		if (this.state.mode === "normal"){
+				// Use memory to always load a new set of people (also allows for better animation)
 				choices = randomChoicesWithMemory(this.state.people, this.state.choices, 5);
 		}else{
+			// Not enough Mat(t)s to use memory w/ animation
 			choices = randomChoices(this.state.mattPeople, 5);
 		}
 		console.log(choices);
 		let timer = 15;
-		if (this.state.practice === true){
+		if (this.state.practice === true || this.state.play === false){
 			timer = 0;
 		}
 
+		// Delay setting state to view result animation
 		setTimeout(() =>{
 			this.setState({
 				secondsleft: timer,
@@ -146,8 +167,12 @@ class App extends Component {
 		}, 1000);
 	}
 
-	render() {
-		let game= null;
+//**********************************************
+//************* BUTTON LOGIC *******************
+//**********************************************
+
+	// Display menu when practice and play is off, show back button only on practice
+	buttonLogic(){
 		let buttons = (
 			<div className="buttons">
 				<div><button onClick={this.practice.bind(this)} type="button" className="btn btn-outline-primary btn-lg">Practice First?</button></div>
@@ -156,13 +181,31 @@ class App extends Component {
 			</div>
 		);
 		let backButton = (
-			<div><button onClick={this.timedStart.bind(this)} type="button" className="btn btn-outline-primary">Back</button></div>
+			<div><button onClick={this.back.bind(this)} type="button" className="btn btn-outline-primary back">Back</button></div>
 		);
+		if(this.state.practice){
+			buttons = backButton;
+		}else if(this.state.play){
+			buttons = null;	
+		}
+		return buttons;
+	}
 
+//**********************************************
+//************* APP RENDER *********************
+//**********************************************
+
+	render() {
+		let game= null;
+
+		// Display the gameboard if practice or play has been selected
 		if(this.state.practice || this.state.play){
 			game = <Game onGuess={this.handleGuess.bind(this)} practice={this.state.practice} secondsleft={this.state.secondsleft} score={this.state.score} highscore={this.state.highscore} people={this.state.people} choices={this.state.choices} selected={this.state.selected}/>
 			buttons = null;
+
 		}
+		// Separate button logic for readability
+		let buttons = this.buttonLogic();
 
 
 		return (
@@ -185,6 +228,17 @@ class App extends Component {
 	}
 }
 
+//**********************************************
+//************* HELPER FUNCTIONS ***************
+//**********************************************
+
+// ********* randomChoicesWithMemory()***********************
+// Inputs:
+// 		list: Array of all options
+//		prev: Array of previously selected choices
+//		num:  Number of choices to select
+// Output: 
+//		choices: List of <num> random choices from list that are not in prev
 function randomChoicesWithMemory(list, prev, num){
 	let choices = [];
 	while(choices.length < num){
@@ -195,13 +249,18 @@ function randomChoicesWithMemory(list, prev, num){
 	 	}
 	 	choices.push(rand);
 	 }
-	 console.log(choices);
 	 if (num === 1){
 	 	return choices[0]
 	 }
 	 return choices
 }
 
+// ********* randomChoices()***********************
+// Inputs:
+// 		list: Array of all options
+//		num:  Number of choices to select
+// Output: 
+//		choices: List of <num> random choices from list
 function randomChoices(list, num){
 	let choices = [];
 	while(choices.length < num){
@@ -211,20 +270,22 @@ function randomChoices(list, num){
 	 	}
 	 	choices.push(rand);
 	 }
-	 console.log(choices);
 	 if (num === 1){
 	 	return choices[0]
 	 }
 	 return choices
 }
 
+// ********* mattFiler()***********************
+// Inputs:
+// 		people: Array of all people
+// Output: 
+//		mattPeople: List of people who's first name begins with Mat
 function mattFilter(people){
 	var regexp = new RegExp('^mat', 'i');
 	let mattPeople = people.filter(person => {
                             return regexp.test(person.firstName);
                         })
-	console.log("Matt People:")
-	console.log(mattPeople);
 	return mattPeople;
 }
 

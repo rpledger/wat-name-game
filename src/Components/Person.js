@@ -19,10 +19,11 @@ class Person extends Component {
 			this.setState({
 				guessed: false
 			});
-		}, 750);
+		}, 700);
 	}
 
 	render() {
+		// Class logic for guess animation
 		let classString = classNames({
 			'right': this.state.guessed && this.props.selected,
 			'wrong': this.state.guessed && !this.props.selected,

@@ -6,11 +6,14 @@ class ScoreBoard extends Component {
 		let score = this.props.score;
 		let highscore = this.props.highscore;
 		let secondsleft = this.props.secondsleft;
-		if (this.props.practice === true){
+
+		// Don't report timer or scores when practicing
+		if (this.props.practice === true ){
 			score = "--"
 			highscore = "--"
 			secondsleft = "--"
 		}
+
 		return (
 			<div className="ScoreBoard">
 				<div className="score"><h5>Score:</h5><h5>{score}</h5> </div>
