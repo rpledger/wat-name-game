@@ -17,7 +17,6 @@ class App extends Component {
 			practice: false,
 			play: false, 
 			secondsleft: 0,
-			correct: false,
 		};
 	}
 
@@ -81,8 +80,7 @@ class App extends Component {
 			if(id === this.state.selected.id){
 				console.log("Selected Correctly!")
 				this.setState({
-					score: this.state.score + 1,
-					correct: true,
+					score: this.state.score + 1
 
 				});
 			}else if (this.state.score > this.state.highscore){
@@ -106,12 +104,11 @@ class App extends Component {
 
 		setTimeout(() =>{
 			this.setState({
-				correct: false,
 				secondsleft: timer,
 				choices: choices,
 				selected: randomChoices(choices, 1)
 			});
-		}, 1200);
+		}, 800);
 	}
 
 	render() {
