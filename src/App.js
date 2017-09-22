@@ -10,24 +10,35 @@ class App extends Component {
 		super();
 		this.state = {
 			people: [],
+			mattPeople: [],
 			choices: [],
 			selected: {},
 			highscore: 0,
 			score: 0,
 			practice: false,
 			play: false, 
+			mode: "normal",
 			secondsleft: 0,
 		};
 	}
 
 	componentDidMount() {
+		// Load WT People Data
 		axios.get('https://willowtreeapps.com/api/v1.0/profiles/').then(response => {
 			let people = response.data;
-			let choices = randomChoices(people, 5);
+			let mattPeople = mattFilter(people);
+			// let choices = [];
+			// if (this.state.mode === "normal"){
+			// 	choices = randomChoices(people, 5);
+			// }else{
+			// 	choices = randomChoices(mattPeople, 5);
+			// }
+			
 			this.setState({
 				people: people,
-				choices: choices,
-				selected: randomChoices(choices, 1),
+				mattPeople: mattPeople,
+				//choices: choices,
+				//selected: randomChoices(choices, 1),
 				score: 0,
 				highscore: 0
 			});
@@ -37,21 +48,7 @@ class App extends Component {
 		});
 	}
 
-	practice() {
-		console.log("Practice");
-		if (this.state.play === true){
-			this.setState({
-				highscore: Math.max(this.state.score, this.state.highscore),
-				score: 0
-			});
-		}
-		this.setState({
-			practice: true,
-			play: false
-		});
-		clearInterval(this.interval);
-	}
-
+	// Tick -1 second for countdown timer
 	tick(){
 		this.setState({
 			secondsleft: this.state.secondsleft - 1
@@ -61,13 +58,44 @@ class App extends Component {
 		}
 	}
 
-	timedStart() {
+	practice() {
+		console.log("Practice");
+		let choices = randomChoices(this.state.people, 5);
+
+		if (this.state.play === true){
+			this.setState({
+				highscore: Math.max(this.state.score, this.state.highscore),
+				score: 0
+			});
+		}
+		this.setState({
+			practice: true,
+			play: false,
+			choices: choices,
+			selected: randomChoices(choices, 1),
+		});
 		clearInterval(this.interval);
+	}
+
+
+	timedStart(mode) {
+		console.log(mode);
+		clearInterval(this.interval);
+		let choices = [];
+			if (mode === "normal"){
+				choices = randomChoices(this.state.people, 5);
+			}else{
+				choices = randomChoices(this.state.mattPeople, 5);
+			}
 		this.interval = setInterval(this.tick.bind(this), 1000);
 		this.setState({
+			mode: mode,
+			choices: choices,
+			selected: randomChoices(choices, 1),
 			play: true,
 			practice: false,
 			secondsleft: 15,
+			score: 0,
 		});
 
 	}
@@ -97,7 +125,12 @@ class App extends Component {
 		}
 
 		// Re-load People
-		let choices = randomChoicesWithMemory(this.state.people, this.state.choices, 5);
+		let choices = [];
+		if (this.state.mode === "normal"){
+				choices = randomChoicesWithMemory(this.state.people, this.state.choices, 5);
+		}else{
+			choices = randomChoices(this.state.mattPeople, 5);
+		}
 		console.log(choices);
 		let timer = 15;
 		if (this.state.practice === true){
@@ -115,24 +148,19 @@ class App extends Component {
 
 	render() {
 		let game= null;
-		let playButton = (
-			<div className="button">
-				<button onClick={this.timedStart.bind(this)} type="button" className="btn btn-outline-primary">Start Playing</button>
-			</div>
-		);
 		let buttons = (
 			<div className="buttons">
 				<div><button onClick={this.practice.bind(this)} type="button" className="btn btn-outline-primary btn-lg">Practice First?</button></div>
-				<div><button onClick={this.timedStart.bind(this)} type="button" className="btn btn-outline-primary btn-lg">Start Playing</button></div>
+				<div><button onClick={this.timedStart.bind(this, 'normal')} type="button" className="btn btn-outline-primary btn-lg">Play Timer Challenge</button></div>
+				<div><button onClick={this.timedStart.bind(this, 'matt')} type="button" className="btn btn-outline-primary btn-lg">Play Mat(t)'s Timer Challenge</button></div>
 			</div>
 		);
+		let backButton = (
+			<div><button onClick={this.timedStart.bind(this)} type="button" className="btn btn-outline-primary">Back</button></div>
+		);
+
 		if(this.state.practice || this.state.play){
 			game = <Game onGuess={this.handleGuess.bind(this)} practice={this.state.practice} secondsleft={this.state.secondsleft} score={this.state.score} highscore={this.state.highscore} people={this.state.people} choices={this.state.choices} selected={this.state.selected}/>
-		}
-
-		if(this.state.practice){
-			buttons = playButton;
-		}else if (this.state.play){
 			buttons = null;
 		}
 
@@ -188,6 +216,16 @@ function randomChoices(list, num){
 	 	return choices[0]
 	 }
 	 return choices
+}
+
+function mattFilter(people){
+	var regexp = new RegExp('^mat', 'i');
+	let mattPeople = people.filter(person => {
+                            return regexp.test(person.firstName);
+                        })
+	console.log("Matt People:")
+	console.log(mattPeople);
+	return mattPeople;
 }
 
 export default App;

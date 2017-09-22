@@ -15,6 +15,11 @@ class Person extends Component {
 		});
 
 		this.props.onGuess(id);
+		setTimeout(() =>{
+			this.setState({
+				guessed: false
+			});
+		}, 750);
 	}
 
 	render() {
