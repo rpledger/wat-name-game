@@ -13,9 +13,9 @@ class ScoreBoard extends Component {
 		}
 		return (
 			<div className="ScoreBoard">
-				<div className="score"><h5>Score: {score}</h5> </div>
-				<div className="highscore"><h5>High Score: {highscore}</h5> </div>
-				<div className="Timer"><h5>Timer: {secondsleft}</h5></div>
+				<div className="score"><h5>Score:</h5><h5>{score}</h5> </div>
+				<div className="score"><h5>Timer:</h5> <h5>{secondsleft}</h5></div>
+				<div className="score"><h5>High Score:</h5> <h5>{highscore}</h5> </div>
 			</div>
 		);
 	}

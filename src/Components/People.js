@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Person from './Person'
+import { CSSTransitionGroup } from 'react-transition-group'
 
 class People extends Component {
 	onGuess(id){
@@ -9,10 +10,12 @@ class People extends Component {
 	render() {
 		let personList;
 		let selectedName = this.props.selected.firstName + ' ' + this.props.selected.lastName
+
 		if(this.props.choices){
 			personList = this.props.choices.map(person => {
+				let selected = this.props.selected.id === person.id
 				return(
-					<Person onGuess={this.onGuess.bind(this)} key={person.id} person={person} />
+					<Person onGuess={this.onGuess.bind(this)} key={person.id} person={person} selected={selected} />
 				);
 			});
 		}
@@ -20,7 +23,16 @@ class People extends Component {
 			<div className="People">
 				<h3>Who is {selectedName}?</h3>
 				<div className="row">
-				{personList}
+					<CSSTransitionGroup
+				        transitionName="example"
+				        transitionAppear={true}
+				        transitionAppearTimeout={500}
+				        transitionEnter={true}
+				        transitionLeave={true}
+				        transitionEnterTimeout={500}
+				        transitionLeaveTimeout={100}>
+				        {personList}
+	        		</CSSTransitionGroup>
 				</div>
 			</div>
 		);

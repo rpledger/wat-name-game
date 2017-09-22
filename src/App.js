@@ -14,7 +14,8 @@ class App extends Component {
 			score: 0,
 			practice: false,
 			play: false, 
-			secondsleft: 0
+			secondsleft: 0,
+			correct: false
 		};
 	}
 
@@ -50,7 +51,7 @@ class App extends Component {
 		});
 		if (this.state.secondsleft <= 0){
 			//clearInterval(this.interval);
-			alert("Good job!");
+			//alert("Good job!");
 			this.handleGuess(null);
 		}
 	}
@@ -74,8 +75,9 @@ class App extends Component {
 			if(id === this.state.selected.id){
 				console.log("Selected Correctly!")
 				this.setState({
-					//correct: true,
-					score: this.state.score + 1
+					score: this.state.score + 1,
+					correct: true,
+
 				});
 			}else if (this.state.score > this.state.highscore){
 				this.setState({
@@ -89,13 +91,14 @@ class App extends Component {
 			}
 		}
 		// Re-load People
-		let choices = randomChoices(this.state.people, 5);
+		let choices = randomChoicesWithMemory(this.state.people, this.state.choices, 5);
 		console.log(choices);
 		let timer = 15;
 		if (this.state.practice === true){
 			timer = 0;
 		}
 		this.setState({
+			correct: false,
 			secondsleft: timer,
 			choices: choices,
 			selected: randomChoices(choices, 1)
@@ -119,11 +122,27 @@ class App extends Component {
 	}
 }
 
-function randomChoices(list, num){
+function randomChoicesWithMemory(list, prev, num){
 	let choices = [];
 	while(choices.length < num){
 		let rand = list[Math.floor(Math.random() * list.length)];
 		console.log(rand.headshot.url)
+	 	while(choices.indexOf(rand) !== -1 || prev.indexOf(rand) !== -1 || typeof rand.headshot.url === 'undefined'){
+	 		rand = list[Math.floor(Math.random() * list.length)];
+	 	}
+	 	choices.push(rand);
+	 }
+	 console.log(choices);
+	 if (num === 1){
+	 	return choices[0]
+	 }
+	 return choices
+}
+
+function randomChoices(list, num){
+	let choices = [];
+	while(choices.length < num){
+		let rand = list[Math.floor(Math.random() * list.length)];
 	 	while(choices.indexOf(rand) !== -1 || typeof rand.headshot.url === 'undefined'){
 	 		rand = list[Math.floor(Math.random() * list.length)];
 	 	}
