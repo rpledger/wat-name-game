@@ -38,8 +38,10 @@ class App extends Component {
 	practice() {
 		console.log("Practice");
 		this.setState({
-			practice: true
+			practice: true,
+			play: false
 		});
+		clearInterval(this.interval);
 	}
 
 	tick(){
@@ -55,17 +57,20 @@ class App extends Component {
 
 	timedStart() {
 		console.log("Playing Game");
+		console.log(this.state.practice)
+		clearInterval(this.interval);
+		this.interval = setInterval(this.tick.bind(this), 1000);
 		this.setState({
 			play: true,
 			practice: false,
 			secondsleft: 15,
 		});
-		this.interval = setInterval(this.tick.bind(this), 1000);
+
 	}
 
 	handleGuess(id){
 		console.log("Clicked!");
-		if (this.state.practice !== true){
+		if (this.state.play === true){
 			if(id === this.state.selected.id){
 				console.log("Selected Correctly!")
 				this.setState({
