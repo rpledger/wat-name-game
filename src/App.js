@@ -48,6 +48,7 @@ class App extends Component {
 		});
 		if (this.state.secondsleft <= 0){
 			//clearInterval(this.interval);
+			alert("Good job!");
 			this.handleGuess(null);
 		}
 	}
@@ -110,7 +111,8 @@ function randomChoices(list, num){
 	let choices = [];
 	while(choices.length < num){
 		let rand = list[Math.floor(Math.random() * list.length)];
-	 	while(choices.indexOf(rand) !== -1 ){
+		console.log(rand.headshot.url)
+	 	while(choices.indexOf(rand) !== -1 || typeof rand.headshot.url === 'undefined'){
 	 		rand = list[Math.floor(Math.random() * list.length)];
 	 	}
 	 	choices.push(rand);
