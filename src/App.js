@@ -57,6 +57,7 @@ class App extends Component {
 		console.log("Playing Game");
 		this.setState({
 			play: true,
+			practice: false,
 			secondsleft: 15,
 		});
 		this.interval = setInterval(this.tick.bind(this), 1000);
@@ -64,27 +65,33 @@ class App extends Component {
 
 	handleGuess(id){
 		console.log("Clicked!");
-		if(id === this.state.selected.id){
-			console.log("Selected Correctly!")
-			this.setState({
-				//correct: true,
-				score: this.state.score + 1
-			});
-		}else if (this.state.score > this.state.highscore){
-			this.setState({
-				highscore: this.state.score,
-				score: 0
-			});
-		}else{
-			this.setState({
-				score: 0
-			});
+		if (this.state.practice !== true){
+			if(id === this.state.selected.id){
+				console.log("Selected Correctly!")
+				this.setState({
+					//correct: true,
+					score: this.state.score + 1
+				});
+			}else if (this.state.score > this.state.highscore){
+				this.setState({
+					highscore: this.state.score,
+					score: 0
+				});
+			}else{
+				this.setState({
+					score: 0
+				});
+			}
 		}
 		// Re-load People
 		let choices = randomChoices(this.state.people, 5);
 		console.log(choices);
+		let timer = 15;
+		if (this.state.practice === true){
+			timer = 0;
+		}
 		this.setState({
-			secondsleft: 15,
+			secondsleft: timer,
 			choices: choices,
 			selected: randomChoices(choices, 1)
 		});
@@ -93,7 +100,7 @@ class App extends Component {
 	render() {
 		let game= null;
 		if(this.state.practice || this.state.play){
-			game = <Game onGuess={this.handleGuess.bind(this)} secondsleft={this.state.secondsleft} score={this.state.score} highscore={this.state.highscore} people={this.state.people} choices={this.state.choices} selected={this.state.selected}/>
+			game = <Game onGuess={this.handleGuess.bind(this)} practice={this.state.practice} secondsleft={this.state.secondsleft} score={this.state.score} highscore={this.state.highscore} people={this.state.people} choices={this.state.choices} selected={this.state.selected}/>
 		}
 
 		return (
