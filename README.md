@@ -1,6 +1,6 @@
 # The Name Game
 
-Leading scientists have proven, via science, that learning your coworkers names while starting a new job is useful. Using the api located at [https://willowtreeapps.com/api/v1.0/profiles/](https://willowtreeapps.com/api/v1.0/profiles/), this application allows users to test their knowledge of WT employees. This application is hosted at [https:/name-game-rebecca.herokuapp.com](https:/name-game-rebecca.herokuapp.com).
+Leading scientists have proven, via science, that learning your coworkers names while starting a new job is useful. Using the api located at [https://willowtreeapps.com/api/v1.0/profiles/](https://willowtreeapps.com/api/v1.0/profiles/), this application allows users to test their knowledge of WT employees. This application is hosted at [https://name-game-rebecca.herokuapp.com](https://name-game-rebecca.herokuapp.com).
 
 # Features
 This version of the Name Game has several play modes:
