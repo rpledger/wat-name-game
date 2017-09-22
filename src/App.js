@@ -201,7 +201,6 @@ class App extends Component {
 		// Display the gameboard if practice or play has been selected
 		if(this.state.practice || this.state.play){
 			game = <Game onGuess={this.handleGuess.bind(this)} practice={this.state.practice} secondsleft={this.state.secondsleft} score={this.state.score} highscore={this.state.highscore} people={this.state.people} choices={this.state.choices} selected={this.state.selected}/>
-			buttons = null;
 
 		}
 		// Separate button logic for readability
