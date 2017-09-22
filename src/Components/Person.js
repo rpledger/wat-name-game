@@ -23,11 +23,7 @@ class Person extends Component {
 			'wrong': this.state.guessed && !this.props.selected,
 			'hide': !this.state.guessed
 		});
-		let octiconClass = classNames({
-			'check': this.props.selected,
-			'x': !this.props.selected,
-		});
-		// imgurl={person.headshot.url} name={person.firstName + ' ' + person.lastName
+
 		return (
 			<div className="Person" onClick={(this.guess.bind(this, this.props.person.id))}>
 				<img  className="img-fluid" alt={this.props.person.firstName + ' ' + this.props.person.lastName} src={this.props.person.headshot.url} />

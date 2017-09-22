@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Game from './Components/Game'
+import ScoreBoard from './Components/Scoreboard'
 import './App.css';
 import axios from 'axios'
 import { CSSTransitionGroup } from 'react-transition-group'
-import ReactTimeout from 'react-timeout'
 
 class App extends Component {
 	constructor() {
@@ -57,8 +57,6 @@ class App extends Component {
 			secondsleft: this.state.secondsleft - 1
 		});
 		if (this.state.secondsleft <= 0){
-			//clearInterval(this.interval);
-			//alert("Good job!");
 			this.handleGuess(null);
 		}
 	}
@@ -83,17 +81,21 @@ class App extends Component {
 					score: this.state.score + 1
 
 				});
-			}else if (this.state.score > this.state.highscore){
-				this.setState({
-					highscore: this.state.score,
-					score: 0,
-				});
 			}else{
-				this.setState({
-					score: 0,
-				});
+				if (this.state.score > this.state.highscore){
+					this.setState({
+						highscore: this.state.score,
+					});
+				}
+				setTimeout(() =>{
+					this.setState({
+						score: 0,
+						play: false,
+					});
+				}, 1000);
 			}
 		}
+
 		// Re-load People
 		let choices = randomChoicesWithMemory(this.state.people, this.state.choices, 5);
 		console.log(choices);
@@ -108,7 +110,7 @@ class App extends Component {
 				choices: choices,
 				selected: randomChoices(choices, 1)
 			});
-		}, 800);
+		}, 1000);
 	}
 
 	render() {
@@ -146,6 +148,7 @@ class App extends Component {
 			        transitionEnterTimeout={500}
 			        transitionLeaveTimeout={100}>
 			        <h1>The Name Game</h1>
+			        <ScoreBoard practice={this.state.practice} secondsleft={this.state.secondsleft} score={this.state.score} highscore={this.state.highscore}/><br />
 			        {buttons}
 			        {game}
         		</CSSTransitionGroup>

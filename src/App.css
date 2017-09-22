@@ -27,15 +27,13 @@ h1{
 	}
 }
 .btn {
-	margin-top: 30px;
-	margin-bottom: 20px;
+	margin-top: 20px;
+	margin-bottom: 10px;
 	width: 200px;
 }
 
 .ScoreBoard{
 	margin-top: 15px;
-	borderBottomColor: 'black';
-    borderBottomWidth: 1;
 }
 .score{
 	/*display: inline-block;
