@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Game from './Components/Game'
 import './App.css';
 import axios from 'axios'
+import { CSSTransitionGroup } from 'react-transition-group'
 
 class App extends Component {
 	constructor() {
@@ -15,7 +16,7 @@ class App extends Component {
 			practice: false,
 			play: false, 
 			secondsleft: 0,
-			correct: false
+			correct: false,
 		};
 	}
 
@@ -38,6 +39,12 @@ class App extends Component {
 
 	practice() {
 		console.log("Practice");
+		if (this.state.play === true){
+			this.setState({
+				highscore: Math.max(this.state.score, this.state.highscore),
+				score: 0
+			});
+		}
 		this.setState({
 			practice: true,
 			play: false
@@ -57,8 +64,6 @@ class App extends Component {
 	}
 
 	timedStart() {
-		console.log("Playing Game");
-		console.log(this.state.practice)
 		clearInterval(this.interval);
 		this.interval = setInterval(this.tick.bind(this), 1000);
 		this.setState({
@@ -82,11 +87,11 @@ class App extends Component {
 			}else if (this.state.score > this.state.highscore){
 				this.setState({
 					highscore: this.state.score,
-					score: 0
+					score: 0,
 				});
 			}else{
 				this.setState({
-					score: 0
+					score: 0,
 				});
 			}
 		}
@@ -107,16 +112,42 @@ class App extends Component {
 
 	render() {
 		let game= null;
+		let playButton = (
+			<div className="button">
+				<button onClick={this.timedStart.bind(this)} type="button" className="btn btn-outline-primary">Start Playing</button>
+			</div>
+		);
+		let buttons = (
+			<div className="buttons">
+				<div><button onClick={this.practice.bind(this)} type="button" className="btn btn-outline-primary btn-lg">Practice First?</button></div>
+				<div><button onClick={this.timedStart.bind(this)} type="button" className="btn btn-outline-primary btn-lg">Start Playing</button></div>
+			</div>
+		);
 		if(this.state.practice || this.state.play){
 			game = <Game onGuess={this.handleGuess.bind(this)} practice={this.state.practice} secondsleft={this.state.secondsleft} score={this.state.score} highscore={this.state.highscore} people={this.state.people} choices={this.state.choices} selected={this.state.selected}/>
 		}
 
+		if(this.state.practice){
+			buttons = playButton;
+		}else if (this.state.play){
+			buttons = null;
+		}
+
+
 		return (
 			<div className="App">
-				<h1>The Name Game</h1>
-				<button onClick={this.practice.bind(this)} type="button" className="btn btn-outline-primary">Practice</button>
-				<button onClick={this.timedStart.bind(this)} type="button" className="btn btn-outline-primary">Start</button>
-				{game}
+				<CSSTransitionGroup
+			        transitionName="game"
+			        transitionAppear={true}
+			        transitionAppearTimeout={500}
+			        transitionEnter={true}
+			        transitionLeave={true}
+			        transitionEnterTimeout={500}
+			        transitionLeaveTimeout={100}>
+			        <h1>The Name Game</h1>
+			        {buttons}
+			        {game}
+        		</CSSTransitionGroup>
 			</div>
 		);
 	}

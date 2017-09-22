@@ -27,7 +27,9 @@ h1{
 	}
 }
 .btn {
-	margin-left: 15px;
+	margin-top: 30px;
+	margin-bottom: 20px;
+	width: 200px;
 }
 
 .ScoreBoard{
@@ -65,12 +67,41 @@ h1{
 
 }
 
+.game-appear {
+  opacity: 0.01;
+}
+
+.game-appear.game-appear-active {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+
+.game-enter {
+  opacity: 0.01;
+}
+
+.game-enter.game-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.game-leave {
+  opacity: 1;
+}
+
+.game-leave.game-leave-active {
+  opacity: 0.01;
+  display: none;
+  transition: all 300ms ease-in;
+}
+
 .example-appear {
   opacity: 0.01;
 }
 
 .example-appear.example-appear-active {
   opacity: 1;
+
   transition: opacity .5s ease-in;
 }
 

@@ -11,7 +11,6 @@ class Game extends Component {
 		return (
 			<div className="Game">
 				<ScoreBoard practice={this.props.practice} secondsleft={this.props.secondsleft} score={this.props.score} highscore={this.props.highscore}/><br />
-                < hr ></hr>
 				<People onGuess={this.onGuess.bind(this)} choices={this.props.choices} selected={this.props.selected} />
 			</div>
 		);
