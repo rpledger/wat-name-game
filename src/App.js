@@ -3,6 +3,7 @@ import Game from './Components/Game'
 import './App.css';
 import axios from 'axios'
 import { CSSTransitionGroup } from 'react-transition-group'
+import ReactTimeout from 'react-timeout'
 
 class App extends Component {
 	constructor() {
@@ -103,12 +104,14 @@ class App extends Component {
 			timer = 0;
 		}
 
-		this.setState({
-			correct: false,
-			secondsleft: timer,
-			choices: choices,
-			selected: randomChoices(choices, 1)
-		});
+		setTimeout(() =>{
+			this.setState({
+				correct: false,
+				secondsleft: timer,
+				choices: choices,
+				selected: randomChoices(choices, 1)
+			});
+		}, 1200);
 	}
 
 	render() {

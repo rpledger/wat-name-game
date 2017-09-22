@@ -10,9 +10,11 @@
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.3",
     "react-classset": "0.0.2",
+    "react-delay": "0.0.4",
     "react-dom": "^15.6.1",
     "react-octicon": "^2.0.0",
     "react-scripts": "1.0.13",
+    "react-timeout": "^1.0.1",
     "react-transition-group": "^1.2.0"
   },
   "scripts": {

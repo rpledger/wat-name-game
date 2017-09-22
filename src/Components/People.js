@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Person from './Person'
 import { CSSTransitionGroup } from 'react-transition-group'
+import Delay from 'react-delay'
 
 class People extends Component {
 	onGuess(id){
@@ -22,18 +23,20 @@ class People extends Component {
 		return (
 			<div className="People">
 				<h3>Who is {selectedName}?</h3>
-				<div className="row">
-					<CSSTransitionGroup
-				        transitionName="example"
-				        transitionAppear={true}
-				        transitionAppearTimeout={500}
-				        transitionEnter={true}
-				        transitionLeave={true}
-				        transitionEnterTimeout={500}
-				        transitionLeaveTimeout={100}>
-				        {personList}
-	        		</CSSTransitionGroup>
-				</div>
+				<Delay wait={500}>
+					<div className="row">
+						<CSSTransitionGroup
+					        transitionName="example"
+					        transitionAppear={true}
+					        transitionAppearTimeout={500}
+					        transitionEnter={true}
+					        transitionLeave={false}
+					        transitionEnterTimeout={500}
+					        transitionLeaveTimeout={100}>
+					        {personList}
+		        		</CSSTransitionGroup>
+		    		</div>
+		    	</Delay>
 			</div>
 		);
 	}

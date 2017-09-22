@@ -78,10 +78,8 @@ h1{
     color: white;
 }
 
-
-.Person span.hidden{
+.Person span.hide{
 	opacity: 0;
-	display: none;
 }
 
 .row{
@@ -98,9 +96,7 @@ h1{
 	background-color: rgba(200,0,0,0.5);
 }
 
-.Octicon{
-	color: white;
-}
+
 
 .game-appear {
   opacity: 0.01;
