@@ -68,6 +68,7 @@ class App extends Component {
 		this.setState({
 			practice: true,
 			play: false,
+			mode: 'normal',
 			choices: choices,
 			selected: randomChoices(choices, 1),
 		});
