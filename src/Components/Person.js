@@ -10,16 +10,17 @@ class Person extends Component {
 	}
 
 	guess(id){
-		this.setState({
-			guessed: true,
-		});
-
-		this.props.onGuess(id);
-		setTimeout(() =>{
+		if (!this.state.guessed){
+			this.props.onGuess(id);
 			this.setState({
-				guessed: false
+				guessed: true,
 			});
-		}, 700);
+			setTimeout(() =>{
+				this.setState({
+					guessed: false
+				});
+			}, 700);
+		}
 	}
 
 	render() {
