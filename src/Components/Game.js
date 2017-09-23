@@ -9,7 +9,7 @@ class Game extends Component {
 	render() {
 		return (
 			<div className="Game">
-				<People onGuess={this.onGuess.bind(this)} choices={this.props.choices} selected={this.props.selected} />
+				{this.props.choices.length > 0 && <People onGuess={this.onGuess.bind(this)} choices={this.props.choices} selected={this.props.selected} />}
 			</div>
 		);
 	}
