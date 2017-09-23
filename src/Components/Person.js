@@ -19,7 +19,7 @@ class Person extends Component {
 				this.setState({
 					guessed: false
 				});
-			}, 700);
+			}, 1000);
 		}
 	}
 
